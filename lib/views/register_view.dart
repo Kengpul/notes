@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import '../firebase_options.dart';
+import 'dart:developer' as devetools show log;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -65,9 +63,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   email: email,
                   password: password,
                 );
-                print(user);
+                devetools.log(user.toString());
               } on FirebaseAuthException catch (e) {
-                print(e.code);
+                devetools.log(e.code);
               }
             },
             child: const Text('Register'),
