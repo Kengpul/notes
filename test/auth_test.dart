@@ -52,7 +52,10 @@ void main() {
       expect(badPasswordUser,
           throwsA(const TypeMatcher<WrongPasswordAuthException>()));
 
-      final user = await provider.createUser(email: 'foo', password: 'bar');
+      final user = await provider.createUser(
+        email: 'foo',
+        password: 'bar',
+      );
       expect(provider.currentUser, user);
       expect(user.isEmailVerified, false);
     });
@@ -112,11 +115,15 @@ class MockAutProvider implements AuthProvider {
   Future<AuthUser> logIn({
     required String email,
     required String password,
-  }) {
+  }) async {
     if (!isInitialized) throw NotInitializedException();
     if (email == 'foo@bar.com') throw UserNotFoundAuthException();
     if (password == 'foobar') throw WrongPasswordAuthException();
-    const user = AuthUser(isEmailVerified: false);
+    const user = AuthUser(
+      id: 'myId',
+      isEmailVerified: false,
+      email: 'foo@bar.com',
+    );
     _user = user;
     return Future.value(user);
   }
@@ -136,7 +143,11 @@ class MockAutProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     final user = _user;
     if (user == null) throw UserNotFoundAuthException();
-    const newUser = AuthUser(isEmailVerified: true);
+    const newUser = AuthUser(
+      id: 'myId',
+      isEmailVerified: false,
+      email: 'foo@bar.com',
+    );
     _user = newUser;
   }
 }
