@@ -64,7 +64,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   email: email,
                   password: password,
                 );
-                final user = AuthService.firebase().currentUser;
                 AuthService.firebase().sendEmailVerification();
                 Navigator.of(context).pushNamed(verifyEmailRoute);
               } on WeakPasswordAuthException {
